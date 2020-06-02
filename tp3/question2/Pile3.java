@@ -6,71 +6,78 @@ import question1.PileVideException;
 import java.util.Vector;
 
 /**
- * Décrivez votre classe PileVector ici.
- * 
+ * D�crivez votre classe PileVector ici.
+ *
  * @author (votre nom)
- * @version (un numéro de version ou une date)
+ * @version (un num�ro de version ou une date)
  */
 public class Pile3 implements PileI {
 
-	private Vector<Object> v;
+    private Vector<Object> v;
 
-	public Pile3() {
-		this(0);
-	}
+    private int taille;
+    private int capacite;
 
-	public Pile3(int taille) {
-		// traiter le cas <=0
-		// à compléter
-	}
+    public Pile3() {
+        this.taille = TAILLE_PAR_DEFAUT;
+        this.v = new Vector(this.taille);
+    }
 
-	public void empiler(Object o) throws PilePleineException {
-		// à compléter
-	}
+    public Pile3(int taille) {
+        if (taille < 0) this.taille = TAILLE_PAR_DEFAUT;
+        else this.taille = taille;
 
-	public Object depiler() throws PileVideException {
-		// à compléter
-		return null;
-	}
+        this.v = new Vector(this.taille);
+    }
 
-	public Object sommet() throws PileVideException {
-		// à compléter
-		return null;
-	}
+    public void empiler(Object o) throws PilePleineException {
+        if (estPleine()) throw new PilePleineException();
+        v.add(o);
+    }
 
-	public int taille() {
-		// à compléter
-		return -1;
-	}
+    public Object depiler() throws PileVideException {
+        if (estVide()) throw new PileVideException();
+        return v.removeElement(v.lastElement());
+    }
 
-	public int capacite() {
-		// à compléter
-		return -1;
-	}
+    public Object sommet() throws PileVideException {
+        return this.v.firstElement();
+    }
 
-	public boolean estVide() {
-		// à compléter
-		return false;
-	}
+    public int taille() {
+        return this.v.size();
+    }
 
-	public boolean estPleine() {
-		// à compléter
-		return false;
-	}
+    public int capacite() {
+        return this.v.capacity();
+    }
 
-	public String toString() {
-		// à compléter
-		return "";
-	}
+    public boolean estVide() {
+        return this.v.isEmpty();
+    }
 
-	public boolean equals(Object o) {
-		// à compléter
-		return false;
-	}
+    public boolean estPleine() {
+        return this.v.size() == this.v.capacity();
+    }
 
-	// fonction fournie
-	public int hashCode() {
-		return toString().hashCode();
-	}
+    public String toString() {
+        StringBuffer sb = new StringBuffer("[");
+        int count = 0;
+        for (Object tmp : this.v) {
+            if (count > 0) sb.append(", ");
+            sb.append(tmp.toString());
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+
+    public boolean equals(Object o) {
+        if (this.toString().equals(((Pile3) o).toString())) return true;
+        return false;
+    }
+
+    public int hashCode() {
+        return toString().hashCode();
+    }
 
 }
